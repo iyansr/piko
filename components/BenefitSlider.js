@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { benefits } from '../data/benefits.json'
+import benefits from '../data/benefits'
 
 const Card = ({ benefit }) => {
 	return (
