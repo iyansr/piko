@@ -1,6 +1,7 @@
 import BenefitSection from 'components/BenefitSection'
 import Header from 'components/Header'
 import Hero from 'components/Hero'
+import PartnerSection from 'components/PartnerSection'
 import React from 'react'
 
 function Home() {
@@ -9,6 +10,7 @@ function Home() {
 			<Header />
 			<Hero />
 			<BenefitSection />
+			<PartnerSection />
 		</div>
 	)
 }
