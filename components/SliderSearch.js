@@ -2,16 +2,7 @@ import React, { useRef } from 'react'
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import { Swiper } from 'swiper/react'
 
-const Slider = ({
-	children,
-	slidesPerView = 2,
-	breakpoints = {
-		768: {
-			slidesPerView: 3,
-			spaceBetween: 0,
-		},
-	},
-}) => {
+const SliderSearch = ({ children }) => {
 	const prevRef = useRef(null)
 	const nextRef = useRef(null)
 	return (
@@ -23,9 +14,8 @@ const Slider = ({
 					prevEl: prevRef.current, // Assert non-null
 					nextEl: nextRef.current, // Assert non-null
 				}}
-				slidesPerView={slidesPerView}
+				slidesPerView={1}
 				spaceBetween={18}
-				breakpoints={breakpoints}
 				onInit={(swiper) => {
 					swiper.params.navigation.prevEl = prevRef.current
 					swiper.params.navigation.nextEl = nextRef.current
@@ -64,4 +54,4 @@ const Slider = ({
 	)
 }
 
-export default Slider
+export default SliderSearch

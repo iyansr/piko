@@ -2,6 +2,7 @@ import BenefitSection from 'components/BenefitSection'
 import Header from 'components/Header'
 import Hero from 'components/Hero'
 import PartnerSection from 'components/PartnerSection'
+import SearchSection from 'components/SearchSection'
 import { fetchPlaces, PLACES_KEY } from 'hooks/usePlaces'
 import React from 'react'
 import { SWRConfig } from 'swr'
@@ -14,6 +15,7 @@ function Home({ fallback }) {
 				<Hero />
 				<BenefitSection />
 				<PartnerSection />
+				<SearchSection />
 			</div>
 		</SWRConfig>
 	)
@@ -28,6 +30,7 @@ export async function getStaticProps() {
 				[PLACES_KEY]: places,
 			},
 		},
+		revalidate: 60 * 60,
 	}
 }
 
