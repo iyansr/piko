@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 	try {
 		const params = qs.stringify(
 			{
-				populate: ['image', 'gallery'],
+				populate: ['image', 'gallery', 'facilities'],
 				pagination: {
 					page: req.query?.page ?? 1,
 					pageSize: 20,
@@ -39,6 +39,9 @@ export default async function handler(req, res) {
 					image: place.attributes.image.data?.attributes.url ?? null,
 					gallery: place.attributes.gallery.data?.map((image) => {
 						return image.attributes.url
+					}),
+					facilities: place.attributes.facilities.data?.map((facility) => {
+						return { name: facility.attributes.name, id: facility.id }
 					}),
 				}
 			}),

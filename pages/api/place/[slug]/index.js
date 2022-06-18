@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 						$eq: req.query.slug,
 					},
 				},
-				populate: ['image', 'gallery'],
+				populate: ['image', 'gallery', 'facilities'],
 			},
 			{
 				encodeValuesOnly: true,
@@ -47,6 +47,9 @@ export default async function handler(req, res) {
 					image: place.attributes.image.data?.attributes.url ?? null,
 					gallery: place.attributes.gallery.data?.map((image) => {
 						return image.attributes.url
+					}),
+					facilities: place.attributes.facilities.data?.map((facility) => {
+						return { name: facility.attributes.name, id: facility.id }
 					}),
 				}
 			})[0]
