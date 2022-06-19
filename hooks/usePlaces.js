@@ -10,7 +10,9 @@ export const fetchPlaces = async () => {
 }
 
 const usePlaces = () => {
-	const { data, error } = useSWR(PLACES_KEY, () => fetchPlaces())
+	const { data, error } = useSWR(PLACES_KEY, () => fetchPlaces(), {
+		revalidateOnFocus: false,
+	})
 
 	return {
 		data,

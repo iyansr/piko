@@ -15,7 +15,7 @@ const RightComponents = ({ data, isLoading }) => {
 		)
 	}
 
-	const places = data
+	const places = data || []
 
 	if (places.length === 0) {
 		return (
@@ -61,6 +61,7 @@ const SearchSection = () => {
 	const { data, isLoading } = usePlaces()
 	const [filteredData, setFilteredData] = React.useState([])
 	const [searchValue, setSearchValue] = React.useState('')
+	const [show, setShow] = React.useState(false)
 
 	React.useEffect(() => {
 		if (!isLoading) {
@@ -72,28 +73,49 @@ const SearchSection = () => {
 		if (isEmpty(searchValue)) {
 			setFilteredData(data.data)
 		} else {
-			setFilteredData(data.data.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase())))
+			setFilteredData(
+				data.data.filter((item) => {
+					return item.name.toLowerCase().includes(searchValue.toLowerCase())
+				})
+			)
 		}
 	}, [searchValue])
 
 	return (
 		<div className='bg-[#e9e4de]' id='piko-search'>
-			<div className='max-w-7xl mx-auto px-10 mt-28 grid grid-cols-7 py-12 '>
-				<div className='col-span-4'>
+			<div className='max-w-7xl mx-auto px-10 mt-28 grid grid-cols-7 py-20 '>
+				<div className='col-span-7 md:col-span-4'>
 					<div>
 						<p className='font-bold text-4xl text-[#56514B] tracking-wide mt-2 max-w-[323px]'>Lebih mudah cari coffee shop pake Piko!</p>
 						<p className='mt-6 text-sm text-[#999999] max-w-2xl mx-auto'>Piko akan selalu membantumu</p>
 					</div>
-					<div className='flex items-center mt-12'>
+					<div className='flex items-center mt-12 space-x-4 relative'>
 						<SearcField
 							value={searchValue}
 							onChange={(e) => {
 								setSearchValue(e.target.value)
 							}}
 						/>
+						{/* <button className='h-[58px] w-[58px] bg-white rounded-lg p-4 border border-[#C9CFCE] outline-[#C9CFCE]'>
+							<svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 text-[#C9CFCE]' viewBox='0 0 20 20' fill='currentColor'>
+								<path
+									fillRule='evenodd'
+									d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
+									clipRule='evenodd'
+								/>
+							</svg>
+						</button>
+
+						<div className='absolute -left-[16px] top-[72px] bg-white p-4 rounded-2xl shadow-lg min-w-[343px]'>
+							<div className='flex items-center justify-between m-0'>
+								<button className=' font-semibold text-[#6A6761] text-base'>X</button>
+								<p className='text-center font-semibold text-[#6A6761] text-base'>Filter</p>
+								<button className='opacity-0'>X</button>
+							</div>
+						</div> */}
 					</div>
 				</div>
-				<div className=' relative md:px-12 col-span-3'>
+				<div className=' relative md:px-12 col-span-7 md:col-span-3'>
 					<RightComponents data={filteredData} isLoading={isLoading} />
 				</div>
 			</div>
