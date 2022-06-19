@@ -32,7 +32,7 @@ const PartnerSection = () => {
 								spaceBetween: 0,
 							},
 						}}>
-						{data.data.slice(0, 6).map((item) => (
+						{data?.data?.slice(0, 6)?.map((item) => (
 							<SwiperSlide key={item.id} className='mb-3'>
 								<div className='h-[380px] flex items-center justify-center'>
 									<img src={item.image} className='object-cover' />
