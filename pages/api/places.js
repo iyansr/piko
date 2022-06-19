@@ -14,7 +14,17 @@ export default async function handler(req, res) {
 	try {
 		const params = qs.stringify(
 			{
-				populate: ['image', 'gallery', 'facilities'],
+				populate: {
+					gallery: {
+						fields: ['url'],
+					},
+					image: {
+						fields: ['url'],
+					},
+					facilities: {
+						fields: ['name', 'id'],
+					},
+				},
 				pagination: {
 					page: req.query?.page ?? 1,
 					pageSize: 20,
@@ -31,7 +41,7 @@ export default async function handler(req, res) {
 			url: `/api/places?${params}`,
 		})
 
-		return res.status(response.status).json({
+		return res.status(200).json({
 			data: response.data.data.map((place) => {
 				return {
 					id: place.id,
@@ -40,9 +50,10 @@ export default async function handler(req, res) {
 					gallery: place.attributes.gallery.data?.map((image) => {
 						return image.attributes.url
 					}),
-					facilities: place.attributes.facilities.data?.map((facility) => {
-						return { name: facility.attributes.name, id: facility.id }
-					}),
+					facilities:
+						place?.attributes?.facilities?.data?.map((facility) => {
+							return { name: facility.attributes.name, id: facility.id }
+						}) ?? [],
 				}
 			}),
 			pagination: response.data.meta.pagination,

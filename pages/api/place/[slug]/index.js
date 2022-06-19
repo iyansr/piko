@@ -19,7 +19,17 @@ export default async function handler(req, res) {
 						$eq: req.query.slug,
 					},
 				},
-				populate: ['image', 'gallery', 'facilities'],
+				populate: {
+					gallery: {
+						fields: ['url'],
+					},
+					image: {
+						fields: ['url'],
+					},
+					facilities: {
+						fields: ['name', 'id'],
+					},
+				},
 			},
 			{
 				encodeValuesOnly: true,
@@ -40,7 +50,7 @@ export default async function handler(req, res) {
 		}
 
 		return res.status(response.status).json(
-			response.data.data.map((place) => {
+			response?.data?.data.map((place) => {
 				return {
 					id: place.id,
 					...place.attributes,
@@ -48,9 +58,10 @@ export default async function handler(req, res) {
 					gallery: place.attributes.gallery.data?.map((image) => {
 						return image.attributes.url
 					}),
-					facilities: place.attributes.facilities.data?.map((facility) => {
-						return { name: facility.attributes.name, id: facility.id }
-					}),
+					facilities:
+						place?.attributes?.facilities?.data?.map((facility) => {
+							return { name: facility.attributes.name, id: facility.id }
+						}) ?? [],
 				}
 			})[0]
 		)
